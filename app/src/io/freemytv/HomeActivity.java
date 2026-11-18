@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.FrameLayout;
 
 /**
  * The Free My TV home screen (Android's "Home" role in Free My TV mode). It runs in the :home process: if it crashes,
@@ -51,6 +52,20 @@ public class HomeActivity extends Activity {
         Ui.init(this);
         home = new HomeView(this);
         setContentView(home);
+        // Adiciona a marca d'água do Leandro
+        TextView watermark = new TextView(this);
+        watermark.setText("Modificado por Leandro Corrêa");
+        watermark.setTextColor(Color.parseColor("#80FFFFFF"));
+        watermark.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = Gravity.BOTTOM | Gravity.END;
+        params.setMargins(0, 0, 40, 40);
+        
+        addContentView(watermark, params);
         getWindow().setBackgroundDrawable(null);
         if (wantsAllApps(getIntent())) home.showAllApps();
         else if (getIntent().getBooleanExtra(EXTRA_INPUTS, false)) home.showInputs();
